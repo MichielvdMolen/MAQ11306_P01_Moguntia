@@ -1,0 +1,46 @@
+ #--- RUN CHARACTERISTICS --------------------------
+TITLE      Exc4.
+START_DATE 20000101
+END_DATE   20080101
+
+ #--- DEFINITION OF SPECIES --------------------------
+NAME       CO2
+                                # --- note that emissions are expressed in gram C (and not gram CO2)
+MOLMASS    12.0
+START_CONCENTRATION 368e3
+                                #--- START_CONCENTRATION is given in ppb (=368 ppm)
+LIFE_TIME  -1
+                                #--- LIFE TIME in days; LIFE_TIME = -1 means 'no loss'
+EMISSION DISTRIBUTION emission_dist_co2.dat 4
+   2000 6738e3
+   2001 6900e3
+   2002 6955e3
+   2003 7289e3
+                                # --- The units are kton C / yr = 1e9 gC / yr; 6738e3 kton C/ yr = 6.738 Pg C/yr
+                                # 10 PgC/yr = 3*5.017e38 molecules C / 510.1e16 cm2 / 31104000 seconds = 9.49e12 molecules/cm2/s
+                                
+ #--- Implement the SINK FILE here.
+       
+       
+ #--- OUTPUT SPECIFICATION --------------------------       
+STATION_OUTPUT MONTHLY
+STATION Mace_Head(53N,11W)   53N  11W
+STATION Oregon(45N,124W)     45N 124W
+STATION Barbados(13N,59W)    13N  59W
+STATION Samoa(14S,171W)      14S 171W
+STATION Tasmania(41S,145E)   41S 145E
+OUTPUT  MONTHLY LATLON 1000HPA
+OUTPUT  MONTHLY ZONAL_AVERAGE
+
+END
+
+
+ #--- A few rule for MOGUNTIA input files:
+     - if a line starts with a space, MOGUNTIA will explain it as a comment and not read it.
+     - benefit from automatic highlighting comments by starting them with # (it will improve the readability of the input file)
+     - make only small changes at the time, then try running MOGUNTIA. 
+         If you do many changes at the same time, you won't know where you made a mistake.
+     - keep the file organised.
+     - you may add sampling stations, but be aware that the station name should be written entirely without spaces.
+     - after changing the file, save it (<CTRL> + S), reinitialise Moguntia, select the input file and run.
+     
