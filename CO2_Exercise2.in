@@ -18,11 +18,13 @@ EMISSION LAND 9.49e12
        
  #--- OUTPUT SPECIFICATION --------------------------       
 STATION_OUTPUT MONTHLY
-STATION Mace_Head(53N,11W)   53N  11W
-STATION Oregon(45N,124W)     45N 124W
-STATION Barbados(13N,59W)    13N  59W
-STATION Samoa(14S,171W)      14S 171W
-STATION Tasmania(41S,145E)   41S 145E
+
+STATION Mace_Head(53N,11W)                 53N  11W
+STATION Trinidad_Head_California(41N,124W) 41N 124W
+STATION Barbados(13N,59W)                  13N  59W
+STATION Samoa(14S,171W)                    14S 171W
+STATION Tasmania(41S,145E)                 41S 145E
+
 OUTPUT  MONTHLY LATLON 1000HPA
 OUTPUT  MONTHLY ZONAL_AVERAGE
 
