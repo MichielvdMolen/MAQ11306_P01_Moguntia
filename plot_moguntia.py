@@ -274,7 +274,7 @@ class plot_moguntia:
         COLORS=['r','g','b','m','c','k','y','r','g','b','m','c','k','y','r','g','b','m','c','k','y','r','g','b','m','c','k','y']
         for istat,name in enumerate(self.station_names):
             if name in self.wstat.value:
-                ax.plot(idate,self.data[:,istat]*self.conv,label=name,color=COLORS[istat])
+                ax.plot(idate,self.data[:,istat]*self.conv,label='MOD:'+name,color=COLORS[istat])
         if self.wo.layout.visibility == 'visible':
             ioverstat = -1
             for ostat in self.wo.value:
@@ -297,7 +297,10 @@ class plot_moguntia:
                     ot.append(datetime(year,imnth,day,0,0,0))
                     ov.append(float(xx[2]))
                 opl.close()
-                ax.plot(ot,ov,'o',label=ostat,color=COLORS[ioverstat],markersize=4)            
+                stationname = ostat
+                stationname = stationname.split('_')[2]
+                stationname ='OBS:'+ stationname.split('.')[0]
+                ax.plot(ot,ov,'o',label=stationname,color=COLORS[ioverstat],markersize=4)            
         
         ax.set_ylabel(self.name + ' ('+self.conversion+')')
         ax.set_xlabel('Time')
