@@ -17,7 +17,8 @@ endif
 if (e_land + e_sea + e_snow.gt.0.0) then
 do j=1,nv
 do i=1,nu
-   emit_box = (1.-asland(i,j))*e_sea + asland(i,j)*((1.-snow(i,j))*e_land + snow(i,j)*e_snow)  !#/cm2/s
+   !emit_box = (1.-asland(i,j))*e_sea + asland(i,j)*((1.-snow(i,j))*e_land + snow(i,j)*e_snow)  !#/cm2/s
+   emit_box = (1.-asland(i,j))*e_sea + asland(i,j)*e_land !#/cm2/s
    emit_box = emit_box*1e4*dtim   !#/m2/timestep
    emission_field(i,j,1) = emission_field(i,j,1) + emit_box/(air(i,j,1)*dthick(i,j,1)*1e6)  !delta mixing-ratio/timestep
 enddo
