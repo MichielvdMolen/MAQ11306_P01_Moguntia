@@ -11,7 +11,9 @@ START_CONCENTRATION 368e3
                                 #--- START_CONCENTRATION is given in ppb (=368 ppm)
 LIFE_TIME  -1
                                 #--- LIFE TIME in days; LIFE_TIME = -1 means 'no loss'
-EMISSION LAND 9.49e12
+ 
+ #--- Implement the emission command below according to section 2.3 in the MOGUNTIA_CO2 notebook.
+ 
                                 # --- EMISSION is specified in molecules/cm2/s 
                                 # 10 PgC/yr = 3*5.017e38 molecules C / 510.1e16 cm2 / 31104000 seconds = 9.49e12 molecules/cm2/s
        
