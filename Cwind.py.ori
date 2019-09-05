@@ -21,30 +21,30 @@ class Cwind:
         self.month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
         self.lats = 85.0 - np.arange(18)*10
         self.lons = -175 + np.arange(36)*10
-        self.action = ToggleButtons(description='Plottype',options=['zonal-aver','lon-pres','lat-pres','lat-lon'],value='zonal-aver')
-        self.m_slider = IntSlider(description='Month',min=1, max=12, step=1, value=0)
-        self.lon_slider = IntSlider(description='Longitude',min=-175, max=175, step=10, value=-175)
-        self.lat_slider = IntSlider(description='Latitude ',min=-85, max=85, step=10, value=5)
-        self.pres_slider = IntSlider(description='Pressure ',min=100, max=1000, step=100, value=1000)
+        self.action = ToggleButtons( description='Plottype',options=['lat-lon','zonal-aver','lat-pres','lon-pres'],value='lat-lon')
+        self.m_slider    = IntSlider(description='Month',    min=   1, max= 12,  step=  1, value=0)
+        self.lon_slider  = IntSlider(description='Longitude',min=-175, max=175,  step= 10, value=-175)
+        self.lat_slider  = IntSlider(description='Latitude ',min= -85, max= 85,  step= 10, value=5)
+        self.pres_slider = IntSlider(description='Pressure ',min= 100, max=1000, step=100, value=1000)
 
         
     def plot_wind(self,action=ToggleButtons(),month=0,lon=0,lat=0,pres=0):
         if action=='zonal-aver':
-            self.lat_slider.layout.visibility = "hidden"
-            self.lon_slider.layout.visibility = "hidden"
-            self.pres_slider.layout.visibility = "hidden"
+            self.lat_slider.visible=False
+            self.lon_slider.visible=False
+            self.pres_slider.visible=False
         elif action == 'lon-pres':
-            self.lat_slider.layout.visibility = "visible"
-            self.lon_slider.layout.visibility = "hidden"
-            self.pres_slider.layout.visibility = "hidden"
+            self.lat_slider.visible=True
+            self.lon_slider.visible=False
+            self.pres_slider.visible=False
         elif action == 'lat-pres':
-            self.lat_slider.layout.visibility = "hidden"
-            self.lon_slider.layout.visibility = "visible"
-            self.pres_slider.layout.visibility = "hidden"
+            self.lat_slider.visible=False
+            self.lon_slider.visible=True
+            self.pres_slider.visible=False
         elif action == 'lat-lon':
-            self.lat_slider.layout.visibility = "hidden"
-            self.lon_slider.layout.visibility = "hidden"
-            self.pres_slider.layout.visibility = "visible"
+            self.lat_slider.visible=False
+            self.lon_slider.visible=False
+            self.pres_slider.visible=True
         else:
             None
             
