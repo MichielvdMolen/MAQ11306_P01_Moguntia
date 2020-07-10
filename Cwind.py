@@ -1,5 +1,6 @@
 import h5py
-from mpl_toolkits.basemap import Basemap # Import the map plotting interface.
+#from mpl_toolkits.basemap import Basemap # Import the map plotting interface.
+import cartopy#.crs as ccrs
 import numpy as np 
 import matplotlib.pyplot as plt  # Matplotlib is a scientific plotting package.
 from matplotlib.pyplot import cm
@@ -188,20 +189,22 @@ class Cwind:
             y,x = np.mgrid[ 85:-85:18j,-175:175:36j]
             xv = urz/maxx
             yv = vrz/maxy
-            plot1,ax = plt.subplots(figsize=(14,6))
-            m = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
-              llcrnrlon=-180,urcrnrlon=180,resolution='c')
-            m.drawcoastlines()
+            
+# --- Basemap            
+#           plot1,ax = plt.subplots(figsize=(14,6))
+#           m = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
+#             llcrnrlon=-180,urcrnrlon=180,resolution='c')
+#           m.drawcoastlines()
             #m.fillcontinents(color='coral',lake_color='aqua')
             # draw parallels and meridians.
-            m.drawparallels(np.arange(-90.,91.,30.))
-            m.drawmeridians(np.arange(-180.,181.,60.))
+#           m.drawparallels(np.arange(-90.,91.,30.))
+#           m.drawmeridians(np.arange(-180.,181.,60.))
             #m.drawmapboundary(fill_color='aqua')
 
-            m.quiver(x, y, xv, yv,        # data
-                       speedz,              # colour the arrows based on this array
-                       cmap=cm.rainbow,     # colour map
-                       headlength=5)        # length of the arrows
+#           m.quiver(x, y, xv, yv,        # data
+#                       speedz,              # colour the arrows based on this array
+#                       cmap=cm.rainbow,     # colour map
+#                       headlength=5)        # length of the arrows
             #plt.streamplot(x, y, xv, yv,          # data
             #               color=speedz,         # array that determines the colour
             #               cmap=cm.rainbow,        # colour map
@@ -209,16 +212,40 @@ class Cwind:
             #               arrowstyle='->',     # arrow style
             #               arrowsize=1.5)       # arrow size
 
-            #ax.set_xlabel('logitude (degrees)')
-            #ax.set_ylabel('latitude (degrees)')
-            #ax.text(-170,85,'Pressure: %4i hPa'%(1000-ktake*100))
-            #ax.text(50,85,'month: %s'%(self.month[m]))
-            #ax.text(-170,-85,'max u %6.1f m/s'%(maxx))
-            #ax.text(50,-85,'max v %6.1f m/s'%(maxy))
-
-            plt.title('windfield %4i hPa ; month: %s    (color: horizontal windspeed (m/s))'%(1000-ktake*100, self.month[imonth]))
-            plt.colorbar()
-            plt.show(plot1)                 # display the plot
+# --- Cartopy
+            import matplotlib.ticker as mticker
+            from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+ 
+            fig1 = plt.figure(1,figsize=(14,6))
+            ax = fig1.add_subplot(111, projection=cartopy.crs.PlateCarree(),facecolor='w')
+            h=ax.quiver(x, y, xv, yv,        # data
+                       speedz,              # colour the arrows based on this array
+                       cmap=cm.rainbow,     # colour map
+                       headlength=5)
+            ax.set_xlabel('logitude (degrees)')
+            ax.set_ylabel('latitude (degrees)')
+            ax.text(-170,85,'Pressure: %4i hPa'%(1000-ktake*100))
+            ax.text(50,85,'month: %s'%(self.month[imonth]))
+            ax.text(-170,-85,'max u %6.1f m/s'%(maxx))
+            ax.text(50,-85,'max v %6.1f m/s'%(maxy))
+            
+            ax.add_feature(cartopy.feature.COASTLINE)
+            #draw_labels=True ) 
+            ax.gridlines(crs=cartopy.crs.PlateCarree(), linewidth=1, color='black', draw_labels=True, alpha=0.5, linestyle='--')
+            ax.xlabels_top  = False
+            ax.ylabels_left = False
+            ax.ylabels_right=True
+            ax.xlines       = True
+            ax.xlocator     = mticker.FixedLocator([-160, -140, -120, 120, 140, 160, 180,])
+            ax.xformatter   = LONGITUDE_FORMATTER
+            ax.yformatter   = LATITUDE_FORMATTER
+            ax.xlabel_style = {'size': 15, 'color': 'gray'}
+            ax.xlabel_style = {'color': 'red', 'weight': 'bold'}
+            
+            t = ax.set_title('windfield %4i hPa ; month: %s    (color: horizontal windspeed (m/s))'%(1000-ktake*100, self.month[imonth]))
+            t.set_position((0.5,1.07))
+            plt.colorbar(h)
+            plt.show(fig1)                 # display the plot
         else:
             None
        
