@@ -10,22 +10,27 @@ from IPython.display import display
 
 class Cwind:
     def __init__(self):
-        x = h5py.File('./DATA/wind.h5')
-        self.rho = x['.']['rho'].value
-        self.u = x['.']['u'].value
-        self.v = x['.']['v'].value
-        self.w = x['.']['w'].value
+        x           = h5py.File('./DATA/wind.h5')
+        print(list(x.keys()))
+#  =    self.rho    = x['.']['rho'].value
+#       self.u      = x['.']['u'].value
+#       self.v      = x['.']['v'].value
+#       self.w      = x['.']['w'].value
+        self.rho    = x['rho'][()]
+        self.u      = x['u']  [()]
+        self.v      = x['v']  [()]
+        self.w      = x['w']  [()]
         x.close()
-        self.npn = 10
-        self.latn = 18
-        self.lonn = 36
-        self.month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-        self.lats = 85.0 - np.arange(18)*10
-        self.lons = -175 + np.arange(36)*10
+        self.npn    = 10
+        self.latn   = 18
+        self.lonn   = 36
+        self.month  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+        self.lats   = 85.0 - np.arange(18)*10
+        self.lons   = -175 + np.arange(36)*10
         self.action = ToggleButtons(description='Plottype',options=['zonal-aver','lon-pres','lat-pres','lat-lon'],value='zonal-aver')
-        self.m_slider = IntSlider(description='Month',min=1, max=12, step=1, value=0)
-        self.lon_slider = IntSlider(description='Longitude',min=-175, max=175, step=10, value=-175)
-        self.lat_slider = IntSlider(description='Latitude ',min=-85, max=85, step=10, value=5)
+        self.m_slider    = IntSlider(description='Month',min=1, max=12, step=1, value=0)
+        self.lon_slider  = IntSlider(description='Longitude',min=-175, max=175, step=10, value=-175)
+        self.lat_slider  = IntSlider(description='Latitude ',min=-85, max=85, step=10, value=5)
         self.pres_slider = IntSlider(description='Pressure ',min=100, max=1000, step=100, value=1000)
 
         
